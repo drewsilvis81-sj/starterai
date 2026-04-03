@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Private AI — A Gift</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:   #1a1a2e;
+      --navy2:  #16213e;
+      --gold:   #c9a84c;
+      --cream:  #f5f0e8;
+      --muted:  #8a8fa8;
+      --white:  #ffffff;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--navy);
+      color: var(--white);
+      font-family: 'Georgia', 'Times New Roman', serif;
+      min-height: 100vh;
+    }
+
+    /* ── Gold bars ── */
+    .bar-top, .bar-bottom {
+      height: 5px;
+      background: var(--gold);
+      width: 100%;
+      position: fixed;
+      z-index: 100;
+    }
+    .bar-top { top: 0; }
+    .bar-bottom { bottom: 0; }
+
+    /* ── Hero ── */
+    .hero {
+      text-align: center;
+      padding: 100px 24px 60px;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      letter-spacing: 0.3em;
+      font-size: 0.75rem;
+      color: var(--gold);
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-weight: 400;
+      margin-bottom: 28px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.8rem, 6vw, 4.5rem);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--white);
+      margin-bottom: 16px;
+    }
+
+    .hero-sub {
+      font-size: 1.15rem;
+      color: var(--gold);
+      font-style: italic;
+      margin-bottom: 40px;
+    }
+
+    .divider {
+      width: 80px;
+      height: 1px;
+      background: var(--gold);
+      margin: 0 auto 40px;
+      opacity: 0.6;
+    }
+
+    .hero-body {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: var(--muted);
+      max-width: 560px;
+      margin: 0 auto 20px;
+    }
+
+    .hero-body strong {
+      color: var(--cream);
+      font-style: normal;
+    }
+
+    /* ── Download button ── */
+    .download-wrap {
+      margin: 48px auto 0;
+      text-align: center;
+    }
+
+    .btn-download {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--navy);
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      letter-spacing: 0.08em;
+      padding: 18px 48px;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: opacity 0.2s;
+    }
+    .btn-download:hover { opacity: 0.88; }
+
+    .btn-note {
+      display: block;
+      margin-top: 12px;
+      font-size: 0.8rem;
+      color: var(--muted);
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+    }
+
+    /* ── Features panel ── */
+    .features-section {
+      max-width: 720px;
+      margin: 80px auto 0;
+      padding: 0 24px;
+    }
+
+    .section-label {
+      text-align: center;
+      letter-spacing: 0.25em;
+      font-size: 0.7rem;
+      color: var(--gold);
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      margin-bottom: 32px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: rgba(201, 168, 76, 0.15);
+      border: 1px solid rgba(201, 168, 76, 0.2);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    @media (max-width: 560px) {
+      .features-grid { grid-template-columns: 1fr; }
+    }
+
+    .feature {
+      background: var(--navy2);
+      padding: 28px 24px;
+    }
+
+    .feature-title {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+
+    .feature-desc {
+      font-size: 0.9rem;
+      line-height: 1.6;
+      color: var(--muted);
+    }
+
+    /* ── Philosophy quote ── */
+    .quote-section {
+      text-align: center;
+      padding: 80px 24px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .quote-line {
+      width: 60px;
+      height: 1px;
+      background: var(--gold);
+      margin: 0 auto 24px;
+      opacity: 0.5;
+    }
+
+    blockquote {
+      font-size: 1.2rem;
+      line-height: 1.7;
+      color: var(--cream);
+      font-style: italic;
+    }
+
+    /* ── Steps ── */
+    .steps-section {
+      max-width: 720px;
+      margin: 0 auto 80px;
+      padding: 0 24px;
+    }
+
+    .steps-section .section-label { margin-bottom: 36px; }
+
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .step {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      padding: 24px 0;
+      border-bottom: 1px solid rgba(201,168,76,0.1);
+    }
+    .step:last-child { border-bottom: none; }
+
+    .step-num {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--gold);
+      color: var(--navy);
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .step-content {}
+
+    .step-cmd {
+      font-family: 'Courier New', monospace;
+      font-size: 1rem;
+      color: var(--gold);
+      margin-bottom: 4px;
+    }
+
+    .step-desc {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      padding: 32px 24px 48px;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.75rem;
+      color: rgba(138, 143, 168, 0.5);
+      letter-spacing: 0.05em;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bar-top"></div>
+  <div class="bar-bottom"></div>
+
+  <!-- Hero -->
+  <section class="hero">
+    <p class="eyebrow">A &nbsp; G I F T &nbsp; F O R &nbsp; Y O U</p>
+    <h1>Your Private AI</h1>
+    <p class="hero-sub">An intelligence that belongs only to you</p>
+    <div class="divider"></div>
+    <p class="hero-body">
+      Most AI tools are products. You subscribe, they improve for everyone,
+      the company owns the direction.<br><br>
+      <strong>This is different.</strong><br><br>
+      This AI runs entirely on your computer. It stores nothing in the cloud.
+      It remembers every conversation. It learns specifically who you are.
+      It belongs to you — now and as long as you develop it.
+    </p>
+
+    <div class="download-wrap">
+      <a class="btn-download" href="YourAI_StarterKit.zip" download>
+        DOWNLOAD YOUR AI
+      </a>
+      <span class="btn-note">32 KB &nbsp;·&nbsp; Mac &amp; Linux &nbsp;·&nbsp; Free to run forever</span>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="features-section">
+    <p class="section-label">W H A T ' S &nbsp; I N S I D E</p>
+    <div class="features-grid">
+      <div class="feature">
+        <p class="feature-title">SOUL ARCHITECTURE</p>
+        <p class="feature-desc">Three-layer identity grounded in Aristotle. It knows who it is, who you are, and what the relationship is for.</p>
+      </div>
+      <div class="feature">
+        <p class="feature-title">PERSISTENT MEMORY</p>
+        <p class="feature-desc">Every saved session builds the memory chain. Context clearing is not a reset — identity persists across time.</p>
+      </div>
+      <div class="feature">
+        <p class="feature-title">LEARNING LOOP</p>
+        <p class="feature-desc">Extracts lessons from your sessions. Detects its own gaps. Generates training candidates for review.</p>
+      </div>
+      <div class="feature">
+        <p class="feature-title">BRAIN FUNCTIONS</p>
+        <p class="feature-desc">Default Mode Network synthesis, predictive priming, Theory of Mind — the full architecture running quietly.</p>
+      </div>
+      <div class="feature">
+        <p class="feature-title">IMMUNE SYSTEM</p>
+        <p class="feature-desc">Three-line biological defense. Recognizes seven attack patterns. Protects identity without becoming rigid.</p>
+      </div>
+      <div class="feature">
+        <p class="feature-title">ROUNDTABLE</p>
+        <p class="feature-desc">Can consult Gemini, Groq &amp; Claude simultaneously when it needs more perspectives. Free API keys available.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quote -->
+  <section class="quote-section">
+    <div class="quote-line"></div>
+    <blockquote>
+      "The more you use it, the more it knows you.<br>That is the point."
+    </blockquote>
+    <div class="quote-line" style="margin-top:24px;"></div>
+  </section>
+
+  <!-- Steps -->
+  <section class="steps-section">
+    <p class="section-label">G E T T I N G &nbsp; S T A R T E D</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <p class="step-cmd">bash install.sh</p>
+          <p class="step-desc">Downloads the AI model (~2GB, one time) and sets everything up. Takes about 5 minutes.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <p class="step-cmd">python3 first_run.py</p>
+          <p class="step-desc">Your first conversation. Name your AI, set its style, tell it who you are. It greets you and asks what brought you here.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <p class="step-cmd">python3 ai.py</p>
+          <p class="step-desc">Start every session from here. Your memory, your preferences, and everything from your first conversation will be there.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    Built with care &nbsp;·&nbsp; Runs locally &nbsp;·&nbsp; Belongs to you
+  </footer>
+
+</body>
+</html>
